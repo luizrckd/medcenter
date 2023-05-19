@@ -1,58 +1,37 @@
 package br.com.medcenter.api.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.util.Objects;
+
+@Data
 @Entity
 @Table(name = "tb_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String nome;
+    private String username;
     private String email;
-    private String password;
+    private String senha;
+    private String dtnasc;
+    private String cpf;
 
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(getId(), user.getId()) && Objects.equals(getNome(), user.getNome()) && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getSenha(), user.getSenha()) && Objects.equals(getDtnasc(), user.getDtnasc()) && Objects.equals(getCpf(), user.getCpf()) && Objects.equals(getType(), user.getType());
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getNome(), getUsername(), getEmail(), getSenha(), getDtnasc(), getCpf(), getType());
     }
 }
